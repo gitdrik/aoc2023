@@ -11,8 +11,8 @@ open("03.txt") do f
         n !="" && push!(N, (i, 140, n))
     end
 
-    G::Dict{Tuple{Int, Int}, Array{Int}} = Dict()
     p1 = 0
+    G::Dict{Tuple{Int, Int}, Array{Int}} = Dict()
     for (i, j, n) ∈ N
         for r ∈ i-1:i+1, c ∈ j-length(n):j+1
             if (r, c) ∈ keys(S)
