@@ -18,7 +18,6 @@ open("08.txt") do f
     pos = [a for a ∈ keys(G) if a[3]=='A']
     cycles = fill(0, length(pos))
     for i ∈ eachindex(pos)
-        t = time()
         while pos[i][3] ≠ 'Z'
             cycles[i] += 1
             c = LR[mod1(cycles[i], length(LR))]
