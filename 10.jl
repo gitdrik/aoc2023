@@ -27,14 +27,14 @@ open("10.txt") do f
     left::Set{Tuple{Int, Int}} = Set()
     Q = [S]
     while !isempty(Q)
-        row, col = pop!(Q)
-        (row, col) ∈ seen && continue
-        push!(seen, (row, col))
-        for (dr, dc) ∈ pipes[M[row][col]]
-            if (row+dr, col+dc) ∉ seen
-                push!(left, (row, col) .+ leftside[(dr, dc)])
-                push!(left, (row+dr, col+dc) .+ leftside[(dr, dc)])
-                push!(Q, (row+dr, col+dc))
+        p = pop!(Q)
+        p ∈ seen && continue
+        push!(seen, p)
+        for dp ∈ pipes[M[p[1]][p[2]]]
+            if p .+ dp ∉ seen
+                push!(left, p .+ leftside[dp])
+                push!(left, p .+ dp .+ leftside[dp])
+                push!(Q, p .+ dp)
             end
         end
     end
