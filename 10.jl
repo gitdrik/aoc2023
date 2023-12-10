@@ -31,7 +31,7 @@ open("10.txt") do f
         (row, col) ∈ seen && continue
         push!(seen, (row, col))
         for (dr, dc) ∈ pipes[M[row][col]]
-            if (-dr,-dc) ∈ pipes[M[row+dr][col+dc]] && (row+dr, col+dc) ∉ seen
+            if (row+dr, col+dc) ∉ seen
                 push!(left, (row, col) .+ leftside[(dr, dc)])
                 push!(left, (row+dr, col+dc) .+ leftside[(dr, dc)])
                 push!(Q, (row+dr, col+dc))
