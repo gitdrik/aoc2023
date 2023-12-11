@@ -21,8 +21,8 @@ open("11.txt") do f
     function dist(expansion)
         d = 0
         for i ∈ 1:length(G)-1, j ∈ i+1:length(G)
-            r1, r2 = sort([G[i][1], G[j][1]])
-            c1, c2 = sort([G[i][2], G[j][2]])
+            r1, r2 = minmax(G[i][1], G[j][1])
+            c1, c2 = minmax(G[i][2], G[j][2])
             d += r2+c2-r1-c1
             d += expansion * sum(r ∈ r1:r2 for r∈ER)
             d += expansion * sum(c ∈ c1:c2 for c∈EC)
