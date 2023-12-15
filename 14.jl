@@ -23,51 +23,6 @@ open("14.txt") do f
         return B
     end
 
-    function west!(B)
-        done = false
-        while !done
-            done = true
-            for c∈2:cols, r∈1:rows
-                !B[r,c] && continue
-                (B[r,c-1] || S[r,c-1]) && continue
-                B[r,c] = false
-                B[r,c-1] = true
-                done = false
-            end
-        end
-        return B
-    end
-
-    function south!(B)
-        done = false
-        while !done
-            done = true
-            for r∈rows-1:-1:1, c∈1:cols
-                !B[r,c] && continue
-                (B[r+1,c] || S[r+1,c]) && continue
-                B[r,c] = false
-                B[r+1,c] = true
-                done = false
-            end
-        end
-        return B
-    end
-
-    function east!(B)
-        done = false
-        while !done
-            done = true
-            for c∈cols-1:-1:1, r∈1:rows
-                !B[r,c] && continue
-                (B[r,c+1] || S[r,c+1]) && continue
-                B[r,c] = false
-                B[r,c+1] = true
-                done = false
-            end
-        end
-        return B
-    end
-
     north!(B)
     p1 = sum([sum(B[r,:]) * (rows+1-r) for r∈1:rows])
     println("Part 1: ", p1)
@@ -75,10 +30,11 @@ open("14.txt") do f
     i = 0
     seen::Array{BitMatrix} = []
     while true
-        north!(B)
-        west!(B)
-        south!(B)
-        east!(B)
+        for _ ∈ 1:4
+            north!(B)
+            B = rotr90(B)
+            S = rotr90(S)
+        end
         i += 1
         B ∈ seen && break
         push!(seen, deepcopy(B))
