@@ -14,3 +14,4 @@ using BenchmarkTools; @btime
 13: 1.5 ms
 14: 1.5 s
 15: 1.9 ms
+16: 0.50 s
