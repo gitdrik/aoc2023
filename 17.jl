@@ -6,15 +6,15 @@ open("17.txt") do f
     C = length(M[1])
 
     function solve(minsteps, maxsteps)
-        seen::Dict{Tuple{Int,Int,Int,Int}, Int} = Dict()
+        seen::Set{Tuple{Int,Int,Int,Int}} = Set()
         dp = [(-1, 0), (0, 1), (1, 0), (0, -1)]
         Q = SortedSet([(0, 1, 1, 3, 0)])
         while !isempty(Q)
             h, r, c, d, steps = pop!(Q)
             (r, c)==(R, C) && return h
-            (r, c, d, steps) ∈ keys(seen) && seen[(r, c, d, steps)] ≤ h && continue
+            (r, c, d, steps) ∈ seen && continue
             for s ∈ steps:maxsteps
-               seen[(r, c, d, s)] = h
+                push!(seen, (r, c, d, s))
             end
             for nd ∈ d-1:d+1
                 nd = mod1(nd, 4)
