@@ -1,35 +1,29 @@
 open("12.txt") do f
     p1, p2 = 0, 0
-    for (i, l) ∈ enumerate(eachline(f))
+    for l ∈ eachline(f)
         s, ns = split(l)
         ns = parse.(Int, split(ns,','))
 
         s2 = s*'?'*s*'?'*s*'?'*s*'?'*s
         ns2 = repeat(ns, 5)
 
-        MEM::Dict{Tuple{Array{Int}, Int}, Int} = Dict()
-        function extend(s, ns, ndig)
-            isempty(ns) && return 1
-            (ns, ndig) ∈ keys(MEM) && return MEM[(ns, ndig)]
-
+        MEM::Dict{Tuple{String, Array{Int}}, Int} = Dict()
+        function solve(s, ns)
+            isempty(ns) && return '#' ∉ s
+            length(s) < sum(ns)+length(ns)-1 && return 0
+            (s, ns) ∈ keys(MEM) && return MEM[(s, ns)]
             ans = 0
-            n = ns[1]
-            last = length(ns)==1
-            maxdots = ndig-sum(ns)-length(ns)+1            
-
-            for d ∈ 0:maxdots
-                ext = '.'^d * '#'^n * '.'^!last
-                last && (ext *= '.'^(ndig-length(ext)))
-                ts = s[end-ndig+1:end-ndig+length(ext)]
-                rts = Regex(replace(replace(ts, "."=>"\\."), '?'=>'.'))
-                !occursin(rts, ext) && continue
-                ans += extend(s, ns[2:end], ndig-length(ext))
+            if s[1] ≠ '#'
+                ans += solve(s[2:end], ns)
             end
-            MEM[(ns, ndig)] = ans
+            if '.' ∉ s[1:ns[1]] && (length(s)==ns[1] || '#' ∉ s[ns[1]+1:ns[1]+1])
+                ans += solve(s[ns[1]+2:end], ns[2:end])
+            end
+            MEM[(s, ns)] = ans
             return ans
         end
-        p1 += extend(s, ns, length(s))
-        p2 += extend(s2, ns2, length(s2))
+        p1 += solve(s, ns)
+        p2 += solve(s2, ns2)
     end
     println("Part 1: ", p1)
     println("Part 2: ", p2)

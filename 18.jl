@@ -1,4 +1,3 @@
-function run()
 open("18.txt") do f
     ls = readlines(f)
     M = Set()
@@ -42,5 +41,4 @@ open("18.txt") do f
     circshift!(C, 1)
     p2 = sum(C[i][1] * (C[i-1][2]-C[i][2]) for i∈2:2:length(C)) + O÷2 + 1
     println("Part 2: ", p2)
-end
 end
