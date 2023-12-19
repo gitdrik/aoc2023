@@ -35,9 +35,7 @@ open("19.txt") do f
     println("Part 1: ", p1)
 
     function test2(ranges, lable)
-        current = prod(length.(values(ranges)))
-        current==0 && return 0
-        lable=="A" && return current
+        lable=="A" && return prod(length.(values(ranges)))
         lable=="R" && return 0
         ranges = deepcopy(ranges)
         ans = 0
