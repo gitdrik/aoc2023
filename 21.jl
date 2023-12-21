@@ -10,10 +10,9 @@ open("21.txt") do f
         seen::Set{NTuple{3, Int}} = Set()
         while !isempty(Q)
             (r, c, steps) = pop!(Q)
-            steps > need && continue
             (r, c, steps) ∈ seen && continue
             push!(seen, (r, c, steps))
-            steps==need && (stops += 1)
+            steps==need && (stops += 1; continue)
             for (dr, dc) ∈ [(-1,0), (0, 1), (1, 0), (0, -1)]
                 M[mod1(r+dr, R)][mod1(c+dc, C)]=='#' && continue
                 r+dr∈1:R && c+dc∈1:C && push!(Q, (r+dr, c+dc, steps+1))
