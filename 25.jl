@@ -38,7 +38,7 @@ open("25.txt") do f
         iter = 0
         iters = N-1
         start = nodes[1]
-        # Find a stop node on the other side of the partition
+        # Find a stop node on the other side of the 3 line partition
         # using maxflow algorithm. When found, return cut candidates.
         for stop ∈ nodes[2:end]
             flowlines::Set{Set{String}} = Set()
